@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+# ReScript
+.bsb.lock
+/lib
+.merlin
+*.bs.js
