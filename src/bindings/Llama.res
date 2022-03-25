@@ -1,3 +1,6 @@
+include Llama__Pseudo
+include Llama__Tokens
+
 module Provider = {
   @module("@llama-ui/react") @react.component
   external make: (~children: React.element=?, ~theme: {..}=?, unit) => React.element =
@@ -9,90 +12,12 @@ module GlobalStyle = {
   @module("@llama-ui/react") @react.component
   external make: (~styles: {..}=?, unit) => React.element = "Global"
 }
+
 type sizes = [
   | #px(int)
   | #max
   | #content
 ]
-
-module Align = {
-  type t = [
-    | #center
-    | #start
-    | #end
-  ]
-
-  let toString = x =>
-    switch x {
-    | Some(a) =>
-      switch a {
-      | #center => "center"
-      | #start => "flex-start"
-      | #end => "flex-end"
-      }
-    | None => ""
-    }
-}
-
-module Spacing = {
-  type t = [
-    | #px(int)
-    | #auto
-    | #none
-  ]
-
-  let toString = (x: option<t>) =>
-    switch x {
-    | Some(a) =>
-      switch a {
-      | #px(v) => Belt.Int.toString(v) ++ "px"
-      | #auto => "auto"
-      | #none => "none"
-      }
-    | None => ""
-    }
-}
-
-module Size = {
-  type t = [
-    | #px(int)
-    | #full
-    | #content
-  ]
-
-  let toString = (x: option<t>) =>
-    switch x {
-    | Some(a) =>
-      switch a {
-      | #px(v) => Belt.Int.toString(v) ++ "px"
-      | #full => "100%"
-      | #content => "fit-content"
-      }
-    | None => ""
-    }
-}
-module Display = {
-  type t = [
-    | #flex
-    | #grid
-    | #block
-    | #none
-  ]
-}
-module Fonts = {
-  type size = int
-  type weight = int
-
-  let toString = (x: option<int>) =>
-    switch x {
-    | Some(a) => Belt.Int.toString(a) ++ "px"
-    | None => ""
-    }
-}
-
-type responsive<'t> = 't
-
-let pseudo = (~bg: option<responsive<string>>=?, ()): {..} => {"bg": bg}
 
 module Element = {
   type llamaElement
@@ -122,16 +47,11 @@ module Element = {
   type radius = [
     | #px(int)
   ]
+
   type margin = [
     | #px(int)
     | #auto
   ]
-  type flex = [
-    | #column
-    | #row
-  ]
-
-  type border = string
 
   let getElementByTag = element =>
     switch element {
@@ -151,14 +71,6 @@ module Element = {
     | #p => llama["p"]
     }
 
-  type teste = [
-    | tags
-    | Align.t
-    | colors
-    | radius
-    | margin
-  ]
-
   @module("react")
   external createElement: (llamaElement, {..}, option<React.element>) => React.element =
     "createElement"
@@ -175,9 +87,9 @@ module Element = {
     ~bg: option<responsive<string>>=?,
     ~bgColor: option<string>=?,
     /* border radius */
-    ~radius: option<radius>=?,
+    ~radius: option<Radius.t>=?,
     /* border */
-    ~border: option<border>=?,
+    ~border: option<Border.t>=?,
     /* margins */
     ~m: option<responsive<Spacing.t>>=?,
     ~my: option<responsive<Spacing.t>>=?,
@@ -195,16 +107,16 @@ module Element = {
     ~pl: option<responsive<Spacing.t>>=?,
     ~pr: option<responsive<Spacing.t>>=?,
     /* alignment */
-    ~align: option<responsive<string>>=?,
-    ~alignSelf: option<responsive<string>>=?,
-    ~alignContent: option<responsive<string>>=?,
-    ~justify: option<responsive<string>>=?,
-    ~justifyItems: option<responsive<string>>=?,
-    ~justifySelf: option<responsive<string>>=?,
-    ~place: option<responsive<string>>=?,
-    ~placeItems: option<responsive<string>>=?,
-    ~placeSelf: option<responsive<string>>=?,
-    ~placeContent: option<responsive<string>>=?,
+    ~align: option<responsive<Align.t>>=?,
+    ~alignSelf: option<responsive<Align.t>>=?,
+    ~alignContent: option<responsive<Align.t>>=?,
+    ~justify: option<responsive<Justify.t>>=?,
+    ~justifyItems: option<responsive<Justify.t>>=?,
+    ~justifySelf: option<responsive<Justify.t>>=?,
+    ~place: option<responsive<Align.t>>=?,
+    ~placeItems: option<responsive<Align.t>>=?,
+    ~placeSelf: option<responsive<Align.t>>=?,
+    ~placeContent: option<responsive<Align.t>>=?,
     /* layout */
     ~w: option<responsive<Size.t>>=?,
     ~minW: option<responsive<Size.t>>=?,
@@ -215,10 +127,11 @@ module Element = {
     ~d: option<responsive<Display.t>>=?,
     ~gap: option<responsive<Size.t>>=?,
     /* flex */
-    ~direction: option<responsive<flex>>=?,
+    ~direction: option<responsive<Flex.direction>>=?,
     /* fonts */
     ~size: option<responsive<Fonts.size>>=?,
     ~weight: option<responsive<Fonts.weight>>=?,
+    ~transition: option<responsive<string>>=?,
     /* pseudos */
     ~_hover: {..}={"transition": "all 0.4s"},
   ) => {
@@ -247,12 +160,12 @@ module Element = {
         "pBottom": pb->Spacing.toString,
         "pLeft": pl->Spacing.toString,
         "pRight": pr->Spacing.toString,
-        "alignItems": align,
-        "alignSelf": alignSelf,
-        "alignContent": alignContent,
-        "justifyContent": justify,
-        "justifyItems": justifyItems,
-        "justifySelf": justifySelf,
+        "alignItems": align->Align.toString,
+        "alignSelf": alignSelf->Align.toString,
+        "alignContent": alignContent->Align.toString,
+        "justifyContent": justify->Justify.toString,
+        "justifyItems": justifyItems->Justify.toString,
+        "justifySelf": justifySelf->Justify.toString,
         "place": place,
         "placeItems": placeItems,
         "placeSelf": placeSelf,
@@ -268,6 +181,7 @@ module Element = {
         "flexDirection": direction,
         "fontSize": size->Fonts.toString,
         "fontWeight": weight,
+        "transition": transition,
         "_hover": _hover,
       },
       children,
