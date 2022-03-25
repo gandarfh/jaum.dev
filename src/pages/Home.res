@@ -1,10 +1,13 @@
 open React
 
+let s = string
+
 @react.component
 let make = () => {
-  let name = "Jo" ++ Js.String.fromCharCode(227) ++ "o"
-
-  <Container h={100->#vh} m={80->#px} contentCenter=true>
-    <h1> {(name ++ ", Frontend Enginner")->string} </h1>
+  <Container maxW={600->#px} h={#calc(#sub, 100->#vh, 56->#px)} contentCenter=true>
+    <Heading center=true> {"João, Frontend Enginner"->s} </Heading>
+    <Text center=true>
+      {"Olá, eu sou o João, desenvolvedor frontend, gosto de animes, linguagens funcionais, gatos, de ler documentações e conversar sobre cultura geek."->s}
+    </Text>
   </Container>
 }

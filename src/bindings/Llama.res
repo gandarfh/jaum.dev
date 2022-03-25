@@ -131,8 +131,9 @@ module Element = {
     /* fonts */
     ~size: option<responsive<Fonts.size>>=?,
     ~weight: option<responsive<Fonts.weight>>=?,
-    ~transition: option<responsive<string>>=?,
+    ~textAlign: option<responsive<Fonts.align>>=?,
     /* pseudos */
+    ~transition: option<responsive<string>>=?,
     ~_hover: {..}={"transition": "all 0.4s"},
   ) => {
     createElement(
@@ -180,7 +181,8 @@ module Element = {
         "gap": gap->Size.toString,
         "flexDirection": direction,
         "fontSize": size->Fonts.toString,
-        "fontWeight": weight,
+        "fontWeight": weight->Fonts.toWeight,
+        "textAlign": textAlign->Fonts.toAlign,
         "transition": transition,
         "_hover": _hover,
       },

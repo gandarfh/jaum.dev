@@ -67,19 +67,19 @@ module Size = {
     | #vh(int)
     | #full
     | #content
-    | #calc_sum(array<t>)
+    | #calc([#sum | #sub], t, t)
   ]
 
   let rec toString = (x: option<t>) =>
     switch x {
-    | Some(a) =>
-      switch a {
+    | Some(result) =>
+      switch result {
       | #px(v) => Belt.Int.toString(v) ++ "px"
       | #vh(v) => Belt.Int.toString(v) ++ "vh"
       | #full => "100%"
       | #content => "fit-content"
-      | #calc_sum =>
-        "calc(" ++ Belt.Array.reduce(a, (acc, current) => {acc + current->toString}) ++ ")"
+      | #calc(#sum, a, b) => "calc(" ++ (Some(a)->toString ++ (" + " ++ (Some(b)->toString ++ ")")))
+      | #calc(#sub, a, b) => "calc(" ++ (Some(a)->toString ++ (" - " ++ (Some(b)->toString ++ ")")))
       }
     | None => ""
     }
@@ -95,12 +95,46 @@ module Display = {
 }
 
 module Fonts = {
-  type size = int
-  type weight = int
+  type size = [#px(int)]
+  type weight = [#thin | #light | #regular | #medium | #semi | #bold]
+  type align = [#start | #center | #end | #justify]
 
-  let toString = (x: option<int>) =>
+  type t = [
+    | size
+    | align
+    | weight
+  ]
+  let toAlign = (x: option<align>) =>
     switch x {
-    | Some(a) => Belt.Int.toString(a) ++ "px"
+    | Some(y) =>
+      switch y {
+      | #start => "left"
+      | #end => "right"
+      | #center => "center"
+      | #justify => "justify"
+      }
+    | None => ""
+    }
+  let toWeight = (x: option<weight>) =>
+    switch x {
+    | Some(y) =>
+      switch y {
+      | #thin => "100"
+      | #light => "300"
+      | #regular => "400"
+      | #medium => "500"
+      | #semi => "600"
+      | #bold => "700"
+      }
+    | None => ""
+    }
+
+  let toString = (x: option<size>) =>
+    switch x {
+    | Some(y) =>
+      switch y {
+      | #px(value) => value->Belt.Int.toString ++ "px"
+      }
     | None => ""
     }
 }

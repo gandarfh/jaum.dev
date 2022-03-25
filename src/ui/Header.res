@@ -12,16 +12,17 @@ module Item = {
     let redirect = _e => RescriptReactRouter.push(path)
 
     <Element
-      size={14}
-      weight={600}
+      textAlign=#center
+      weight=#semi
       align=#center
       justify=#center
-      px={16->#px}
       d=#flex
-      h={36->#px}
       tag=#button
-      color="black.200"
+      size={14->#px}
+      px={16->#px}
+      h={36->#px}
       radius={8->#px}
+      color="black.200"
       border="none"
       bg="bg.900"
       transition="all 0.2s"
