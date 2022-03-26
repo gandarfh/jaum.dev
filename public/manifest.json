@@ -1,6 +1,7 @@
 {
   "short_name": "Jaum",
   "name": "Joao - Frontend Engineer",
+  "description": "Olá, eu sou o João, desenvolvedor frontend, gosto de animes, linguagens funcionais, gatos, de ler documentações e conversar sobre cultura geek.",
   "icons": [
     {
       "src": "favicon.ico",
