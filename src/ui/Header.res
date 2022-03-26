@@ -58,7 +58,7 @@ module Links = {
 
 @react.component
 let make = () => {
-  <Container mt={20->#px} contentCenter=true>
+  <Container tag=#header mt={20->#px} contentCenter=true>
     <Box w=#full d=#flex justify=#between align=#center>
       <Item path="/" label="Pagina inicial" /> <Links /> <div />
     </Box>

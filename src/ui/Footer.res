@@ -42,5 +42,5 @@ module Links = {
 
 @react.component
 let make = () => {
-  <Container contentCenter=true h={80->#px}> <Links /> </Container>
+  <Container tag=#footer contentCenter=true h={80->#px}> <Links /> </Container>
 }

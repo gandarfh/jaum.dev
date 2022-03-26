@@ -2,6 +2,7 @@ open Llama
 @react.component
 let make = (
   ~children: React.element,
+  ~tag=#main,
   ~contentCenter: bool=false,
   ~m: responsive<Spacing.t>=0->#px,
   ~mt: responsive<Spacing.t>=0->#px,
@@ -16,7 +17,7 @@ let make = (
     d=#flex
     mx=#auto
     px={16->#px}
-    tag=#main
+    tag
     w=#full
     maxW
     h

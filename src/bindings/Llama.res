@@ -25,6 +25,8 @@ module Box = {
   type tags = [
     | #div
     | #main
+    | #header
+    | #footer
     | #span
     | #ul
     | #li
@@ -58,6 +60,8 @@ module Box = {
     switch element {
     | #div => llama["div"]
     | #main => llama["main"]
+    | #header => llama["header"]
+    | #footer => llama["footer"]
     | #span => llama["span"]
     | #ul => llama["ul"]
     | #li => llama["li"]
