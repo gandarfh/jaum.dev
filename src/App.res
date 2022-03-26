@@ -10,12 +10,14 @@ module Routes = {
 
     switch url.path {
     | list{} => <Home />
-    | list{a, ..._rest} => <div> {React.string("Page " ++ a ++ " Error")} </div>
+    | list{"technologies"} => <Technologies />
+    | list{a, ..._rest} =>
+      <Layout contentCenter=true> {React.string("Page " ++ a ++ " Error")} </Layout>
     }
   }
 }
 
 @react.component
 let default = () => {
-  <Provider theme> <GlobalStyle styles /> <Header /> <Routes /> </Provider>
+  <Provider theme> <GlobalStyle styles /> <Header /> <Routes /> <Footer /> </Provider>
 }

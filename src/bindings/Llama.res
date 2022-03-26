@@ -19,7 +19,7 @@ type sizes = [
   | #content
 ]
 
-module Element = {
+module Box = {
   type llamaElement
 
   type tags = [
@@ -37,6 +37,7 @@ module Element = {
     | #h5
     | #h6
     | #p
+    | #a
   ]
 
   type colors = [
@@ -69,6 +70,7 @@ module Element = {
     | #h5 => llama["h5"]
     | #h6 => llama["h6"]
     | #p => llama["p"]
+    | #a => llama["a"]
     }
 
   @module("react")
@@ -82,6 +84,8 @@ module Element = {
     ~onClick=?,
     ~style=?,
     ~innerRef=?,
+    ~target: option<string>=?,
+    ~href: option<string>=?,
     ~color: option<responsive<string>>=?,
     /* background api */
     ~bg: option<responsive<string>>=?,
@@ -132,6 +136,7 @@ module Element = {
     ~size: option<responsive<Fonts.size>>=?,
     ~weight: option<responsive<Fonts.weight>>=?,
     ~textAlign: option<responsive<Fonts.align>>=?,
+    ~textDecoration: option<responsive<Fonts.decoration>>=?,
     /* pseudos */
     ~transition: option<responsive<string>>=?,
     ~_hover: {..}={"transition": "all 0.4s"},
@@ -142,6 +147,8 @@ module Element = {
         "style": style,
         "ref": innerRef,
         "onClick": onClick,
+        "target": target,
+        "href": href,
         "color": color,
         "bg": bg,
         "bgColor": bgColor,
@@ -183,6 +190,7 @@ module Element = {
         "fontSize": size->Fonts.toString,
         "fontWeight": weight->Fonts.toWeight,
         "textAlign": textAlign->Fonts.toAlign,
+        "textDecoration": textDecoration,
         "transition": transition,
         "_hover": _hover,
       },

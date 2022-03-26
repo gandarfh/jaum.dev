@@ -98,12 +98,8 @@ module Fonts = {
   type size = [#px(int)]
   type weight = [#thin | #light | #regular | #medium | #semi | #bold]
   type align = [#start | #center | #end | #justify]
+  type decoration = [#none | #underline]
 
-  type t = [
-    | size
-    | align
-    | weight
-  ]
   let toAlign = (x: option<align>) =>
     switch x {
     | Some(y) =>

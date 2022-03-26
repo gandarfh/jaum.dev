@@ -9,33 +9,39 @@ type item = {
 module Item = {
   @react.component
   let make = (~label: string, ~path: string) => {
-    let redirect = _e => RescriptReactRouter.push(path)
+    let url = RescriptReactRouter.useUrl()
 
-    <Element
+    let redirect = _e => RescriptReactRouter.push(path)
+    let isActive = switch url.path {
+    | list{item, ..._rest} => Js.String.includes(item, path)
+    | _ => false
+    }
+
+    <Box
       textAlign=#center
       weight=#semi
       align=#center
       justify=#center
       d=#flex
       tag=#button
-      size={14->#px}
+      size={16->#px}
       px={16->#px}
       h={36->#px}
       radius={8->#px}
-      color="black.200"
+      color={isActive ? "black.0" : "black.200"}
       border="none"
-      bg="bg.900"
+      bg={isActive ? "bg.800" : "bg.900"}
       transition="all 0.2s"
       _hover={pseudo(~bg="bg.800", ~color="black.0", ())}
       onClick=redirect>
       {label->string}
-    </Element>
+    </Box>
   }
 }
 
 module Links = {
   let items = [
-    {label: "projetos e tecnologias", path: "/tecnologies"},
+    {label: "projetos e tecnologias", path: "/technologies"},
     {label: "artigos", path: "/articles"},
     {label: "sobre", path: "/about"},
   ]
@@ -46,9 +52,9 @@ module Links = {
 
   @react.component
   let make = () => {
-    <Element mt={20->#px} justify=#center gap={40->#px} d=#flex w=#full maxW={700->#px}>
+    <Box mt={20->#px} justify=#center gap={40->#px} d=#flex w=#full maxW={700->#px}>
       {content->array}
-    </Element>
+    </Box>
   }
 }
 

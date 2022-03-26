@@ -50,6 +50,10 @@ let pseudo = (
   /* fonts */
   ~size: option<responsive<Fonts.size>>=?,
   ~weight: option<responsive<Fonts.weight>>=?,
+  ~textAlign: option<responsive<Fonts.align>>=?,
+  ~textDecoration: option<responsive<Fonts.decoration>>=?,
+  /* pseudos */
+  ~transition: option<responsive<string>>=?,
   (),
 ): {..} =>
   {
@@ -93,4 +97,7 @@ let pseudo = (
     "flexDirection": direction,
     "fontSize": size,
     "fontWeight": weight,
+    "textAlign": textAlign,
+    "textDecoration": textDecoration,
+    "transition": transition,
   }

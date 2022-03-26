@@ -9,5 +9,5 @@ let make = (
   ~color="black.50",
   ~size=36->#px,
 ) => {
-  <Element tag color size weight textAlign={center ? #center : #start}> {children} </Element>
+  <Box tag color size weight textAlign={center ? #center : #start}> {children} </Box>
 }
