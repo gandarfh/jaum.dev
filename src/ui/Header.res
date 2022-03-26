@@ -52,13 +52,15 @@ module Links = {
 
   @react.component
   let make = () => {
-    <Box mt={20->#px} justify=#center gap={40->#px} d=#flex w=#full maxW={700->#px}>
-      {content->array}
-    </Box>
+    <Box justify=#center gap={40->#px} d=#flex w=#full maxW={700->#px}> {content->array} </Box>
   }
 }
 
 @react.component
 let make = () => {
-  <Container contentCenter=true> <Links /> </Container>
+  <Container mt={20->#px} contentCenter=true>
+    <Box w=#full d=#flex justify=#between align=#center>
+      <Item path="/" label="Pagina inicial" /> <Links /> <div />
+    </Box>
+  </Container>
 }

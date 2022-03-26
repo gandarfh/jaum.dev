@@ -58,7 +58,7 @@ module Box = {
     switch element {
     | #div => llama["div"]
     | #main => llama["main"]
-    | #span => llama["section"]
+    | #span => llama["span"]
     | #ul => llama["ul"]
     | #li => llama["li"]
     | #img => llama["img"]

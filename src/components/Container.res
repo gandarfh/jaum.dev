@@ -4,6 +4,7 @@ let make = (
   ~children: React.element,
   ~contentCenter: bool=false,
   ~m: responsive<Spacing.t>=0->#px,
+  ~mt: responsive<Spacing.t>=0->#px,
   ~mb: responsive<Spacing.t>=0->#px,
   ~h: responsive<Size.t>=#content,
   ~maxW=1000->#px,
@@ -20,6 +21,7 @@ let make = (
     maxW
     h
     mb
+    mt
     m>
     {children}
   </Box>

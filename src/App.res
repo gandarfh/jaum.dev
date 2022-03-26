@@ -1,3 +1,4 @@
+open React
 open Llama
 
 @module("./libs/llama/theme.ts") external theme: {..} = "default"
@@ -11,8 +12,16 @@ module Routes = {
     switch url.path {
     | list{} => <Home />
     | list{"technologies"} => <Technologies />
-    | list{a, ..._rest} =>
-      <Layout contentCenter=true> {React.string("Page " ++ a ++ " Error")} </Layout>
+    | value => {
+        let path =
+          <Box tag=#span color="red.600">
+            {(":/" ++ value->Belt.List.toArray->Js.Array2.joinWith("/"))->string}
+          </Box>
+
+        <Layout contentCenter=true>
+          <Heading center=true> {"Page "->string} {path} {" Not Found :("->string} </Heading>
+        </Layout>
+      }
     }
   }
 }
